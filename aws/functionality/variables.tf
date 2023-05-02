@@ -103,7 +103,7 @@ variable "enable_backup_service" {
     default = true
 }
 
-variable "exporter_image_id" {
+variable "exporter_instance_type" {
   description = "The type of backup instance."
   type = list(string)
   default = [

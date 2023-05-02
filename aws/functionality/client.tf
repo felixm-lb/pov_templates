@@ -18,7 +18,7 @@ resource "aws_instance" "client" {
   count = var.client_count
 
   ami           = data.aws_ami.ubuntu.id
-  instance_type = var.client_instance_type
+  instance_type = var.client_instance_type[0]
   key_name = aws_key_pair.generated_key.id
   associate_public_ip_address = false
   availability_zone = var.availability_zone[0]

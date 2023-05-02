@@ -1,5 +1,5 @@
 resource "aws_egress_only_internet_gateway" "internet_gateway" {
-  vpc_id = aws_vpc.lb_vpc.id
+  vpc_id = data.aws_vpc.lb_vpc.id
 
   tags = var.tags
 }

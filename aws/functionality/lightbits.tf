@@ -18,8 +18,8 @@ resource "aws_cloudformation_stack" "lightbits_cf" {
     "S3ConfBucketName" = aws_s3_bucket.config.id
 
     //Backup
-    "EnableBackupService" = var.enable_backup
-    "ExporterImageId" = var.exporter_image
+    "EnableBackupService" = var.enable_backup_service
+    "ExporterImageId" = var.exporter_instance_type[0]
     "S3BackupBucketName" = var.s3_backup_bucket_name
   }
 
@@ -50,8 +50,5 @@ data "aws_security_group" "targets" {
 }
 
 data "aws_iam_instance_profile" "targets" {
-    filter {
-        name = "tag:Name"
-        values = [format("*${aws_cloudformation_stack.lightbits_cf.name}*storage*")]
-    }
+    name = format("*${aws_cloudformation_stack.lightbits_cf.name}*storage*")
 }
