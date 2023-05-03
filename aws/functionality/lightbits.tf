@@ -50,5 +50,5 @@ data "aws_security_group" "targets" {
 }
 
 data "aws_iam_instance_profile" "targets" {
-    name = format("*${aws_cloudformation_stack.lightbits_cf.name}*storage*")
+    name = format("*${aws_cloudformation_stack.lightbits_cf.name}*Storage*")
 }

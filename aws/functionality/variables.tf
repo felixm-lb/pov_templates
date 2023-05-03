@@ -99,8 +99,8 @@ variable "instance_type" {
 
 variable "enable_backup_service" {
     description = "Enable backups for all volumes in the cluster."
-    type = bool
-    default = true
+    type = string
+    default = "False"
 }
 
 variable "exporter_instance_type" {
