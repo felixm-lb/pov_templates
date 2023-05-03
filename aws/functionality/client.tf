@@ -15,6 +15,8 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "client" {
+    depends_on = [aws_route.igw]
+
   count = var.client_count
 
   ami           = data.aws_ami.ubuntu.id
@@ -24,7 +26,6 @@ resource "aws_instance" "client" {
   availability_zone = var.availability_zone[0]
   subnet_id = data.aws_subnet.private_sn.id
   security_groups = [ data.aws_security_group.targets.id ]
-  iam_instance_profile = data.aws_iam_instance_profile.targets.id
 
   user_data = "${file("configure_ubuntu_client.sh")}"
 

@@ -42,13 +42,16 @@ data "aws_subnet" "private_sn" {
   }
 }
 
-data "aws_security_group" "targets" {
-    filter {
-        name = "tag:Name"
-        values = [format("*${aws_cloudformation_stack.lightbits_cf.name}*")]
-    }
+data "aws_route_table" "lb_route_table" {
+  filter {
+    name = "tag:Name"
+    values = [format("*${aws_cloudformation_stack.lightbits_cf.name}*private-route-table*")]
+  }
 }
 
-data "aws_iam_instance_profile" "targets" {
-    name = format("*${aws_cloudformation_stack.lightbits_cf.name}*Storage*")
+data "aws_security_group" "targets" {
+    filter {
+        name = "group-name"
+        values = [format("*${aws_cloudformation_stack.lightbits_cf.name}*SSHSecurityGroup*")]
+    }
 }
