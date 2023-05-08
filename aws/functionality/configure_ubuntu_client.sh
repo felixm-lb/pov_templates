@@ -70,3 +70,7 @@ for qd in $${QDS}; do
 echo "Running FIO - $${bs} $${rw}% reads, qd$${qd}, jobs$${job} for 120 seconds!"
 sudo fio --filename=/dev/disk/by-id/nvme-uuid.$${VOL_UUID} --runtime=120 --time_based --name=test --ioengine=libaio --rw=randrw --bs=$${bs} --direct=1 --rwmixread=$${rw} --numjobs=$${job} --iodepth=$${qd} --group_reporting
 EOL
+            done
+        done
+    done    
+done
