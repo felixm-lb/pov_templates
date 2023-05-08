@@ -19,11 +19,15 @@ This code will deploy the following:
 - S3 bucket (for configuration)
 - SSH keypair (for access without SSM)
 - Lightbits cluster:
- - Instances: i3en.6xlarge
- - Count: 3
+  - Instances: i3en.6xlarge
+  - Count: 3
 - Client VM:
- - Instance: m5.xlarge
- - Count: 1
+  - Instance: m5.xlarge
+  - Count: 1
+- Internet Gateway for external internet access
+- Security Group for the client
+- IAM Instance Profile for the client to use SSM and access the config s3 bucket
+- A bunch of FIO scripts
 
 ## How do I run it?
 
