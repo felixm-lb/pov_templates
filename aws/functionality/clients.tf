@@ -14,6 +14,14 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+data "template_file" "client_user_data" {
+  template = "${file("configure_ubuntu_client.sh")}"
+
+  vars = {
+    bucket_name = "${aws_s3_bucket.config.bucket}"
+  }
+}
+
 resource "aws_instance" "client" {
   depends_on = [aws_route.igw, aws_cloudformation_stack.client_instance_role]
 
@@ -26,9 +34,9 @@ resource "aws_instance" "client" {
   availability_zone = var.availability_zone[0]
   subnet_id = data.aws_subnet.private_sn.id
   security_groups = [ data.aws_security_group.targets.id, aws_security_group.clients.id ]
-  iam_instance_profile = "lb-demo-${random_id.deployment_code.hex}-SSMInstanceProfile"
+  iam_instance_profile = "lb-demo-${random_id.deployment_code.hex}-ClientInstanceProfile"
 
-  user_data = "${file("configure_ubuntu_client.sh")}"
+  user_data = data.template_file.client_user_data.rendered
 
   tags = merge(var.tags, {Name = "lb-demo-client-${count.index}"})
 }

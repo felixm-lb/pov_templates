@@ -6,7 +6,7 @@ Parameters:
     Default: Demo
 
 Resources:
-  Ec2SsmIamInstanceRole:
+  Ec2ClientIamInstanceRole:
     Type: AWS::IAM::Role
     Properties: 
       AssumeRolePolicyDocument: 
@@ -18,13 +18,14 @@ Resources:
       Path: /
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM
+        - arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
       Tags:
         - Key: Name
-          Value: !Sub "${NamePrefix}-SSMInstanceRole"
+          Value: !Sub "${NamePrefix}-ClientInstanceRole"
 
-  Ec2SsmIamInstanceProfile:
+  Ec2ClientIamInstanceProfile:
     Type: AWS::IAM::InstanceProfile
     Properties: 
       Path: /
-      Roles: [!Ref Ec2SsmIamInstanceRole]
-      InstanceProfileName: !Sub "${NamePrefix}-SSMInstanceProfile"
+      Roles: [!Ref Ec2ClientIamInstanceRole]
+      InstanceProfileName: !Sub "${NamePrefix}-ClientInstanceProfile"
