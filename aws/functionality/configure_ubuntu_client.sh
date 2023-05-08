@@ -2,8 +2,7 @@
 
 # Update and install tools
 sudo apt update -y && sudo apt upgrade -y
-sudo apt install -y linux-modules-extra-aws fio unzip jq wget
-sudo wget https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/nvme-cli/1.16-3ubuntu0.1/nvme-cli_1.16.orig.tar.xz -O nvme-cli_1.16.orig.tar.xz
+sudo apt install -y linux-modules-extra-aws fio unzip jq nvme-cli
 
 
 # Load kernel module (and enable on boot)
