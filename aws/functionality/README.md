@@ -43,12 +43,12 @@ We will authentication with AWS, so you'll need credentials! Since I don't want 
 - Scroll down to "Option 2: Manually add a profile to your AWS credentials file (Short-term credentials)" and copy the whole contents into the credentials file you just created
 - It should look something like:
 ```
-[041299419598_ps-soe]
+[ACCOUNTNUMBER_ps-soe]
 aws_access_key_id=TESTKEYETC
 aws_secret_access_key=somerandomstring9087321nklnsad
 aws_session_token=someRandomTokenExamplekandolandew908ue32jiolkwoadhs89aydsaiokdnxmknc?sadmsadlsadmxnjkhe98h
 ```
-- If you're not using the same credentials/account I did: `041299419598_ps-soe`, then you'll need to change the file at `pov_templates -> aws -> functionality -> provider` to reflect the new info. If should look something like this:
+- If you're not using the same credentials/account I did: `XXXXXXXXX_ps-soe`, then you'll need to change the file at `pov_templates -> aws -> functionality -> provider` to reflect the new info. If should look something like this:
 ```
 provider "aws" {
     region = var.region[0]
