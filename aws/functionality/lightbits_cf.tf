@@ -24,6 +24,7 @@ resource "aws_cloudformation_stack" "lightbits_cf" {
   }
 
   template_url = var.lb_latest_template_url
+  timeout_in_minutes = 45 // I've seen it take over 30 because AWS is busy
 
   tags = var.tags
 }

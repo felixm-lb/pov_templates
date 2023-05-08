@@ -15,7 +15,7 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "client" {
-    depends_on = [aws_route.igw]
+  depends_on = [aws_route.igw, aws_cloudformation_stack.client_instance_role]
 
   count = var.client_count
 
@@ -25,7 +25,8 @@ resource "aws_instance" "client" {
   associate_public_ip_address = false
   availability_zone = var.availability_zone[0]
   subnet_id = data.aws_subnet.private_sn.id
-  security_groups = [ data.aws_security_group.targets.id ]
+  security_groups = [ data.aws_security_group.targets.id, aws_security_group.clients.id ]
+  iam_instance_profile = "lb-demo-${random_id.deployment_code.hex}-SSMInstanceProfile"
 
   user_data = "${file("configure_ubuntu_client.sh")}"
 

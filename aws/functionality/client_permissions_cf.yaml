@@ -1,0 +1,30 @@
+Description: Cloud Formation template for IAM Role and Instance Profile for Lightbits Demo Client VMs
+
+Parameters:
+  NamePrefix:
+    Type: String
+    Default: Demo
+
+Resources:
+  Ec2SsmIamInstanceRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      AssumeRolePolicyDocument: 
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: [ec2.amazonaws.com]
+            Action: ['sts:AssumeRole']
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM
+      Tags:
+        - Key: Name
+          Value: !Sub "${NamePrefix}-SSMInstanceRole"
+
+  Ec2SsmIamInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties: 
+      Path: /
+      Roles: [!Ref Ec2SsmIamInstanceRole]
+      InstanceProfileName: !Sub "${NamePrefix}-SSMInstanceProfile"
