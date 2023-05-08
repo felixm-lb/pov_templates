@@ -27,7 +27,7 @@ This code will deploy the following in us-east1 (N.Virginia):
 - Internet Gateway for external internet access
 - Security Group for the client
 - IAM Instance Profile for the client to use SSM and access the config s3 bucket
-- A bunch of FIO scripts
+- A bunch of FIO scripts on the client
 
 ## How do I run it?
 
@@ -80,9 +80,9 @@ When you're done, follow the below steps to delete all your resources:
 To access your instances, use AWS SSM -> it's already set up. If you really want to, you can SSH into the boxes - there's a private key in the tfstate file, but that's advanced. I'd recommend SSM.
 
 ## What can I do?
-The environment comes preconfigured with all the tools you'll need to demo functionality including being connected to the Lighbits cluster and having a small volume to run FIO against.
+The client comes preconfigured with all the tools you'll need to demo functionality including being connected to the Lighbits cluster and having a small volume to run FIO against.
 
-There is a directory here: `/home/ubuntu/fio_scripts` which contains a bunch of FIO scripts that you can play with.
+There is a directory on the client here: `/home/ubuntu/fio_scripts` which contains a bunch of FIO scripts that you can play with.
 
 > **_NOTE:_**  If you're using SSM, you'll have to be true root to access that directory. Run: `sudo su` to navigate to and use those scripts.
 
