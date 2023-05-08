@@ -13,7 +13,7 @@ Please read the instructions for your specific test -> aws/azure -> functionalit
 
 ## Currently available
 - AWS:
-  - functionality
+  - [functionality](./aws/functionality/)
 
 ## Coming soon
 - AWS:
