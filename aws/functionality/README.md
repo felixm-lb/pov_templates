@@ -53,7 +53,7 @@ aws_session_token=someRandomTokenExamplekandolandew908ue32jiolkwoadhs89aydsaiokd
 provider "aws" {
     region = var.region[0]
     shared_credentials_files = ["${path.module}/../credentials"]
-    profile = "YOURACCOUNTNUMBER_ps-soe"
+    profile = "ACCOUNTNUMBER_ps-soe"
 }
 ```
 
