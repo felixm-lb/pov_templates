@@ -22,8 +22,7 @@ sudo ./aws/install
 # Get system_jwt
 SYSTEM_JWT_KEY=`aws s3api list-objects --bucket ${bucket_name} --query "Contents[?contains(Key, 'system_jwt')]" | jq .[0].Key | tr -d '"'`
 aws s3api get-object --bucket ${bucket_name} --key $${SYSTEM_JWT_KEY} system_jwt
-sudo chmod 755 system_jwt
-./system_jwt
+LIGHTOS_JWT=`cat system_jwt | sed -n -e 's/^.*LIGHTOS_JWT=//p'`
 
 # Get hosts
 HOSTS=`aws s3api list-objects --bucket ${bucket_name} --query "Contents[?contains(Key, 'hosts')]" | jq .[0].Key | tr -d '"'`
@@ -31,7 +30,7 @@ aws s3api get-object --bucket ${bucket_name} --key $${HOSTS} hosts
 HOSTS_ARRAY=(`cat hosts | sed -e '1,/etcd\]/d'`)
 
 # Create volume
-CREATE_VOL_RESPONSE=`curl -X POST -k -H "Content-Type: application/json" -H "Authorization: Bearer $$LIGHTOS_JWT" https://$${HOSTS_ARRAY[0]}/api/v2/volumes -d '{"name": "demo_vol", "size": "1GiB", "acl": {"values":["demo_acl"]}, "replicaCount": 3, "projectName": "default"}'`
+CREATE_VOL_RESPONSE=`curl -X POST -k -H "Content-Type: application/json" -H "Authorization: Bearer $${LIGHTOS_JWT}" https://$${HOSTS_ARRAY[0]}/api/v2/volumes -d '{"name": "demo_vol", "size": "1GiB", "acl": {"values":["demo_acl"]}, "replicaCount": 3, "projectName": "default"}'`
 VOL_UUID=`echo $${CREATE_VOL_RESPONSE} | jq .UUID | tr -d '"'`
 
 # Convert hostname to ip
