@@ -66,6 +66,8 @@ Running this deployment is ezpz:
 - Run: `terraform apply`
 - Type: `yes`
 - Watch all your resources deploy and track it inside the AWS console
+  
+> **_NOTE:_** This will take about 45 mins, so grab a coffee or tea! If it fails, check out the error message and try to run `terraform apply` again. Sometimes it works the second or third time.
 
 ### CleanMeUp
 When you're done, follow the below steps to delete all your resources:
