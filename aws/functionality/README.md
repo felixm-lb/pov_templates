@@ -44,6 +44,14 @@ aws_access_key_id=TESTKEYETC
 aws_secret_access_key=somerandomstring9087321nklnsad
 aws_session_token=someRandomTokenExamplekandolandew908ue32jiolkwoadhs89aydsaiokdnxmknc?sadmsadlsadmxnjkhe98h
 ```
+- If you're not using the same credentials/account I did: `041299419598_ps-soe`, then you'll need to change the file at `pov_templates -> aws -> functionality -> provider` to reflect the new info. If should look something like this:
+```
+provider "aws" {
+    region = var.region[0]
+    shared_credentials_files = ["${path.module}/../credentials"]
+    profile = "YOURACCOUNTNUMBER_ps-soe"
+}
+```
 
 > **_NOTE:_**  These credentials will only last for a few hours, so if you get an error from terraform complaining that your credentials have timed out, just repeat the above process
 
