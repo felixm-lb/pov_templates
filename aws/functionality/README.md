@@ -15,7 +15,7 @@
 
 
 ## What do I get?
-This code will deploy the following:
+This code will deploy the following in us-east1 (N.Virginia):
 - S3 bucket (for configuration)
 - SSH keypair (for access without SSM)
 - Lightbits cluster:
