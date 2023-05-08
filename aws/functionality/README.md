@@ -28,8 +28,7 @@ This code will deploy the following:
 ## How do I run it?
 
 ### Prerequisistes
-- Ensure git is installed wherever you are runnig this from: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
-- Install terraform: https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
+Follow the [instructions](../../README.md) to install git & terraform, then clone this repo.
 
 ### Authentication
 We will authentication with AWS, so you'll need credentials! Since I don't want to give any away, the credentials file you'll need isn't in this repo!
