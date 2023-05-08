@@ -22,7 +22,7 @@ resource "aws_instance" "client" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.client_instance_type[0]
   key_name = aws_key_pair.generated_key.id
-  associate_public_ip_address = false
+  associate_public_ip_address = true
   availability_zone = var.availability_zone[0]
   subnet_id = data.aws_subnet.private_sn.id
   security_groups = [ data.aws_security_group.targets.id, aws_security_group.clients.id ]
