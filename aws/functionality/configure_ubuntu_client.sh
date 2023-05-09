@@ -54,98 +54,23 @@ echo "Running FIO - precondition!"
 sudo fio --filename=/dev/disk/by-id/nvme-uuid.$${VOL_UUID} --name=test --ioengine=libaio --rw=randrw --bs=64k --direct=1 --rwmixread=0 --numjobs=1 --iodepth=32 --group_reporting
 EOL
 
-# 4k Writes
-sudo tee -a /home/ubuntu/fio_scripts/fio_4k_writes_qd1_jobs1 > /dev/null << EOL
+# Create various FIO files
+QDS="1"
+JOBS="1 $${CPU_COUNT}"
+BLOCKSIZES="4k 8k 64k"
+READWRITES="0 100"
+
+for qd in $${QDS}; do
+    for job in $${JOBS}; do
+        for bs in $${BLOCKSIZES}; do
+            for rw in $${READWRITES}; do
+                sudo tee -a /home/ubuntu/fio_scripts/fio_bs$${bs}_reads$${rw}_qd$${qd}_jobs$${job} > /dev/null << EOL
 #!/bin/bash
 
-echo "Running FIO - 4k 100% writes, qd1, jobs1 for 120 seconds!"
-sudo fio --filename=/dev/disk/by-id/nvme-uuid.$${VOL_UUID} --runtime=120 --time_based --name=test --ioengine=libaio --rw=randrw --bs=4k --direct=1 --rwmixread=0 --numjobs=1 --iodepth=1 --group_reporting
+echo "Running FIO - $${bs} $${rw}% reads, qd$${qd}, jobs$${job} for 120 seconds!"
+sudo fio --filename=/dev/disk/by-id/nvme-uuid.$${VOL_UUID} --runtime=120 --time_based --name=test --ioengine=libaio --rw=randrw --bs=$${bs} --direct=1 --rwmixread=$${rw} --numjobs=$${job} --iodepth=$${qd} --group_reporting
 EOL
-
-# 4k Reads
-sudo tee -a /home/ubuntu/fio_scripts/fio_4k_reads_qd1_jobs1 > /dev/null << EOL
-#!/bin/bash
-
-echo "Running FIO - 4k 100% read, qd1, jobs1 for 120 seconds!"
-sudo fio --filename=/dev/disk/by-id/nvme-uuid.$${VOL_UUID} --runtime=120 --time_based --name=test --ioengine=libaio --rw=randrw --bs=4k --direct=1 --rwmixread=100 --numjobs=1 --iodepth=1 --group_reporting
-EOL
-
-# 8k Writes
-sudo tee -a /home/ubuntu/fio_scripts/fio_8k_writes_qd1_jobs1 > /dev/null << EOL
-#!/bin/bash
-
-echo "Running FIO - 8k 100% writes, qd1, jobs1 for 120 seconds!"
-sudo fio --filename=/dev/disk/by-id/nvme-uuid.$${VOL_UUID} --runtime=120 --time_based --name=test --ioengine=libaio --rw=randrw --bs=8k --direct=1 --rwmixread=0 --numjobs=1 --iodepth=1 --group_reporting
-EOL
-
-# 8k Reads
-sudo tee -a /home/ubuntu/fio_scripts/fio_8k_reads_qd1_jobs1 > /dev/null << EOL
-#!/bin/bash
-
-echo "Running FIO - 8k 100% read, qd1, jobs1 for 120 seconds!"
-sudo fio --filename=/dev/disk/by-id/nvme-uuid.$${VOL_UUID} --runtime=120 --time_based --name=test --ioengine=libaio --rw=randrw --bs=8k --direct=1 --rwmixread=100 --numjobs=1 --iodepth=1 --group_reporting
-EOL
-
-# 64k Writes
-sudo tee -a /home/ubuntu/fio_scripts/fio_64k_writes_qd1_jobs1 > /dev/null << EOL
-#!/bin/bash
-
-echo "Running FIO - 64k 100% writes, qd1, jobs1 for 120 seconds!"
-sudo fio --filename=/dev/disk/by-id/nvme-uuid.$${VOL_UUID} --runtime=120 --time_based --name=test --ioengine=libaio --rw=randrw --bs=64k --direct=1 --rwmixread=0 --numjobs=1 --iodepth=1 --group_reporting
-EOL
-
-# 64k Reads
-sudo tee -a /home/ubuntu/fio_scripts/fio_64k_reads_qd1_jobs1 > /dev/null << EOL
-#!/bin/bash
-
-echo "Running FIO - 64k 100% read, qd1, jobs1 for 120 seconds!"
-sudo fio --filename=/dev/disk/by-id/nvme-uuid.$${VOL_UUID} --runtime=120 --time_based --name=test --ioengine=libaio --rw=randrw --bs=64k --direct=1 --rwmixread=100 --numjobs=1 --iodepth=1 --group_reporting
-EOL
-
-# 4k Writes - Perf
-sudo tee -a /home/ubuntu/fio_scripts/fio_4k_writes_qd1_jobs$${CPU_COUNT} > /dev/null << EOL
-#!/bin/bash
-
-echo "Running FIO - 4k 100% writes, qd1, jobs$${CPU_COUNT} for 120 seconds!"
-sudo fio --filename=/dev/disk/by-id/nvme-uuid.$${VOL_UUID} --runtime=120 --time_based --name=test --ioengine=libaio --rw=randrw --bs=4k --direct=1 --rwmixread=0 --numjobs=$${CPU_COUNT} --iodepth=1 --group_reporting
-EOL
-
-# 4k Reads - Perf
-sudo tee -a /home/ubuntu/fio_scripts/fio_4k_reads_qd1_jobs$${CPU_COUNT} > /dev/null << EOL
-#!/bin/bash
-
-echo "Running FIO - 4k 100% read, qd1, jobs$${CPU_COUNT} for 120 seconds!"
-sudo fio --filename=/dev/disk/by-id/nvme-uuid.$${VOL_UUID} --runtime=120 --time_based --name=test --ioengine=libaio --rw=randrw --bs=4k --direct=1 --rwmixread=100 --numjobs=$${CPU_COUNT} --iodepth=1 --group_reporting
-EOL
-
-# 8k Writes - Perf
-sudo tee -a /home/ubuntu/fio_scripts/fio_8k_writes_qd1_jobs$${CPU_COUNT} > /dev/null << EOL
-#!/bin/bash
-
-echo "Running FIO - 8k 100% writes, qd1, jobs$${CPU_COUNT} for 120 seconds!"
-sudo fio --filename=/dev/disk/by-id/nvme-uuid.$${VOL_UUID} --runtime=120 --time_based --name=test --ioengine=libaio --rw=randrw --bs=8k --direct=1 --rwmixread=0 --numjobs=$${CPU_COUNT} --iodepth=1 --group_reporting
-EOL
-
-# 8k Reads - Perf
-sudo tee -a /home/ubuntu/fio_scripts/fio_8k_reads_qd1_jobs$${CPU_COUNT} > /dev/null << EOL
-#!/bin/bash
-
-echo "Running FIO - 8k 100% read, qd1, jobs$${CPU_COUNT} for 120 seconds!"
-sudo fio --filename=/dev/disk/by-id/nvme-uuid.$${VOL_UUID} --runtime=120 --time_based --name=test --ioengine=libaio --rw=randrw --bs=8k --direct=1 --rwmixread=100 --numjobs=$${CPU_COUNT} --iodepth=1 --group_reporting
-EOL
-
-# 64k Writes - Perf
-sudo tee -a /home/ubuntu/fio_scripts/fio_64k_writes_qd1_jobs$${CPU_COUNT} > /dev/null << EOL
-#!/bin/bash
-
-echo "Running FIO - 64k 100% writes, qd1, jobs$${CPU_COUNT} for 120 seconds!"
-sudo fio --filename=/dev/disk/by-id/nvme-uuid.$${VOL_UUID} --runtime=120 --time_based --name=test --ioengine=libaio --rw=randrw --bs=64k --direct=1 --rwmixread=0 --numjobs=$${CPU_COUNT} --iodepth=1 --group_reporting
-EOL
-
-# 64k Reads - Perf
-sudo tee -a /home/ubuntu/fio_scripts/fio_64k_reads_qd1_jobs$${CPU_COUNT} > /dev/null << EOL
-#!/bin/bash
-
-echo "Running FIO - 64k 100% read, qd1, jobs$${CPU_COUNT} for 120 seconds!"
-sudo fio --filename=/dev/disk/by-id/nvme-uuid.$${VOL_UUID} --runtime=120 --time_based --name=test --ioengine=libaio --rw=randrw --bs=64k --direct=1 --rwmixread=100 --numjobs=$${CPU_COUNT} --iodepth=1 --group_reporting
-EOL
+            done
+        done
+    done    
+done
