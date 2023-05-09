@@ -26,7 +26,7 @@ variable "client_count" {
 }
 
 variable "client_instance_type" {
-  description = "The type of backup instance."
+  description = "The type of client instance."
   type = list(string)
   default = [
     "m5.xlarge"
